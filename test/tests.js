@@ -1,3 +1,16 @@
+/**
+ * Mocha config
+ */
+
+mocha.timeout(60000);
+mocha.ui('bdd');
+mocha.reporter('html');
+mocha.globals(['jQuery*', '__auth0jp*', 'Auth0*']);
+
+/**
+ * Test Auth0Widget
+ */
+
 describe('auth0-Widget', function () {
 
   var domain =      'abc.auth0.com';
