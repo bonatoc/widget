@@ -168,76 +168,26 @@ To run the entire test suite run `grunt dev` and point your browser to `http://l
 
 We are using [BrowserStack](http://browserstack.com) to run the test suite on multiple browsers on every push.
 
-### Run integration tests
+## Develop
 
-Remove previously existing instances of `browserstack-cli`:
+Run `grunt dev` and point your browser to `http://localhost:9999/test_harness.html` to run the test suite.
 
-```sh
-npm remove -g browserstack-cli
-```
+Run `grunt phantom` if you have PhantomJS installed.
 
-Install the following `browserstack-cli` fork:
+Run `grunt integration` (or `npm test`) if you have SauceLabs account. You will need a `SAUCE_ACCESS_KEY` and `SAUCE_USERNAME` env variables.
 
-```sh
-npm install -g https://github.com/jfromaniello/browserstack-cli/tarball/master
-```
-Remove the old `~/.browserstack` folder to download the jarfile again:
+## Publishing a new version
 
-```sh
-rm -rf ~/.browserstack
-```
-
-Setup browserstack:
-```sh
-browserstack setup
-```
-
-There, you will be prompted for `Username`, `Password`, `Tunnel private key` and `Tunnel API key`. Reach out to somebody at Auth0 in order to get those credentials.
-
-Finally, after doing that, to run the tests:
-
-```sh
-npm test
-```
-
-#### Troubleshooting
-
-* Problem: **message: Invalid or corrupt jarfile `~/.browserstack/BrowserStackTunnel.jar`**
-
-  Solution: Remove `~/.browserstack` and run ` browserstack setup` again.
-
-* Problem: **message: Timed out without seeing Press Ctrl-C to exit**
-
-  Solution: Are you uploading something big? Browserstack may need more upload bandwidth.
-
-* Problem: **message: Timed out without seeing Press Ctrl-C to exit**
-
-  Solution: That means there might be an issue with a running java process. Do:
-
-  ```sh
-  ps | egrep java
-  ```
-
-  Kill the java process, run `npm test` again and it should be solved.
-
-## Releases
-
-To get a release to work, you need to follow these simple commands
+Use:
 
 ```
-  # clear and update dependencies
-  $ rm -rf node_modules
-  $ npm cache clean
-  $ npm i
-
   # release new version
   $ ./bin/version {patch,minor,major}
 
   # update remote repository
-  $ git push origin master --tags
+  $ git push origin master
 
-  # ... and then npm (you might wan't to wait tests pass on CI)
-  $ npm publish
+  # and let Auth0's CI worry about the rest
 ```
 
 That's it!
