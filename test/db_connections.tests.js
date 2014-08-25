@@ -107,18 +107,7 @@ describe('db connections', function () {
         clientID:    '0HP71GSd6PuoRYJ3DXKdiXCUUdGmBbup',
         enableReturnUserExperience: false
       });
-
-      auth0.on('_error', function () {
-          done();
-      });
-
-      auth0.show().on('transition_mode', function (mode) {
-        if (mode !== 'signin') return;
-        $('#a0-signin_easy_email').val('j@j.com');
-        $('#a0-signin_easy_password').val('te');
-        var form = $('.a0-notloggedin form')[0];
-        bean.fire(form, 'submit');
-      });
+      done();
     });
 
 
@@ -129,8 +118,29 @@ describe('db connections', function () {
     // });
 
     it('should display error', function () {
-      var error = $('.a0-signin .a0-error').html();
-      expect(error).to.equal(this.auth0._dict.t('signin:wrongEmailPasswordErrorText'));
+      var auth0 = this.auth0;
+      var submitted = false;
+
+      auth0
+      .show()
+      .on('transition_mode', function (mode) {
+        if (mode !== 'signin') return;
+        $('#a0-signin_easy_email').val('j@j.com');
+        $('#a0-signin_easy_password').val('yy');
+        var form = $('.a0-notloggedin form')[0];
+        bean.fire(form, 'submit');
+        submitted = true;
+      })
+      .on('signin_ready', function() {
+        if (!submitted) return;
+        expect($('.a0-signin .a0-error').html()).to.equal(this.auth0._dict.t('signin:wrongEmailPasswordErrorText'));
+        expect($('.a0-email .a0-input-box').hasClass('a0-error-input')).to.equal(true);
+        expect($('.a0-password .a0-input-box').hasClass('a0-error-input')).to.equal(true);
+
+        done();
+      });
+
+
     });
   });
 });
