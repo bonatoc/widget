@@ -250,9 +250,8 @@ module.exports = function (grunt) {
   grunt.registerTask("example-https", ["less:example", "connect:example-https", "build", "watch"]);
 
   grunt.registerTask("dev",           ["connect:test", "build", "watch"]);
-  grunt.registerTask("phantom",       ["exec:test-inception", "exec:test-phantom"]);
-  grunt.registerTask("integration",   ["exec:test-inception", "exec:test-integration"]);
-  grunt.registerTask("phantom",       ["exec:test-phantom"]);
+  grunt.registerTask("phantom",       ["build", "exec:test-inception", "exec:test-phantom"]);
+  grunt.registerTask("integration",   ["build", "exec:test-inception", "exec:test-integration"]);
 
   grunt.registerTask("cdn",           ["build", "copy:release", "s3:clean", "s3:publish", "maxcdn:purgeCache"]);
 
