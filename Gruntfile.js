@@ -143,7 +143,7 @@ module.exports = function (grunt) {
         stderr: true
       },
       'test-inception': {
-        cmd: 'mocha ./test/support/characters-inception.test.js',
+        cmd: 'node_modules/.bin/mocha ./test/support/characters-inception.test.js',
         stdout: true,
         stderr: true
       },
