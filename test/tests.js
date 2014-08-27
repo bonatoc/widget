@@ -18,10 +18,6 @@ describe('auth0-Widget', function () {
   var callbackURL = 'http://myapp.com/callback';
   var widget, client;
 
-  var removeWidget = function () {
-    $('#a0-widget').remove();
-  };
-
   beforeEach(function () {
     Auth0Widget.prototype._getApp = function () {
       this._client = {
@@ -78,10 +74,10 @@ describe('auth0-Widget', function () {
     };
   });
 
-  afterEach(function () {
-    widget.removeAllListeners('transition_mode');
+  afterEach(function (done) {
     global.window.location.hash = '';
-    removeWidget();
+    widget.removeAllListeners('transition_mode');
+    widget._hideSignIn(done);
   });
 
   it('should initialize client with callbackOnLocationHash', function () {
