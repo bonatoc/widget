@@ -13,59 +13,80 @@ mocha.globals(['jQuery*', '__auth0jp*', 'Auth0*']);
 
 describe('db connections', function () {
   describe('init options', function () {
+    afterEach(function (done) {
+      global.window.location.hash = '';
+      global.window.Auth0 = null;
+      this.auth0.removeAllListeners('transition_mode');
+      this.auth0._hideSignIn(done)
+    });
+
+    beforeEach(function (done) {
+      var self = this;
+
+      if (!this.auth0) return onhidden();
+      this.auth0._hideSignIn(onhidden);
+
+      function onhidden() {
+        self.auth0 = new Auth0Widget({
+          domain:      'mdocs.auth0.com',
+          callbackURL: 'http://localhost:3000/',
+          clientID:    '0HP71GSd6PuoRYJ3DXKdiXCUUdGmBbup',
+          enableReturnUserExperience: false
+        });
+        done();
+      }
+    });
+
     it('can disable signup', function (done) {
-      new Auth0Widget({
-        domain:      'mdocs.auth0.com',
-        callbackURL: 'http://localhost:3000/',
-        clientID:    '0HP71GSd6PuoRYJ3DXKdiXCUUdGmBbup',
-        enableReturnUserExperience: false,
-        showSignup: false
-      }).show().on('transition_mode', function (mode) {
+
+      this.auth0
+      .on('transition_mode', function (mode) {
         if (mode !== 'signin') return;
         expect($('.a0-sign-up').length).to.equal(0);
         expect($('.a0-divider').length).to.equal(0);
         done();
+      })
+      .show({
+        showSignup: false
       });
     });
 
     it('should show signup', function (done) {
-      new Auth0Widget({
-        domain:      'mdocs.auth0.com',
-        callbackURL: 'http://localhost:3000/',
-        clientID:    '0HP71GSd6PuoRYJ3DXKdiXCUUdGmBbup',
-        enableReturnUserExperience: false,
-      }).show().on('transition_mode', function (mode) {
+      this.auth0
+      .on('transition_mode', function (mode) {
         if (mode !== 'signin') return;
         expect($('.a0-sign-up').length).to.equal(1);
         done();
-      });
+      })
+      .show();
     });
 
-    afterEach(function () {
-      $('#a0-widget').parents('div').remove();
-      global.window.location.hash = '';
-      global.window.Auth0 = null;
-    });
   });
 
   describe.skip('when username or password is empty', function () {
-    after(function () {
-      $('#a0-widget').parents('div').remove();
+
+    afterEach(function (done) {
       global.window.location.hash = '';
       global.window.Auth0 = null;
-    });
-
-    afterEach(function () {
       this.auth0.removeAllListeners('transition_mode');
+      this.auth0._hideSignIn(done);
     });
 
-    before(function () {
-      this.auth0 = new Auth0Widget({
-        domain:      'mdocs.auth0.com',
-        callbackURL: 'http://localhost:3000/',
-        clientID:    '0HP71GSd6PuoRYJ3DXKdiXCUUdGmBbup',
-        enableReturnUserExperience: false
-      });
+    beforeEach(function (done) {
+      var self = this;
+
+      if (!this.auth0) return onhidden();
+      this.auth0._hideSignIn(onhidden);
+
+      function onhidden() {
+        self.auth0 = new Auth0Widget({
+          domain:      'mdocs.auth0.com',
+          callbackURL: 'http://localhost:3000/',
+          clientID:    '0HP71GSd6PuoRYJ3DXKdiXCUUdGmBbup',
+          enableReturnUserExperience: false
+        });
+        done();
+      }
     });
 
     //fails on ie9
@@ -90,26 +111,29 @@ describe('db connections', function () {
   });
 
   describe('when username or password is wrong', function () {
-    after(function () {
-      $('#a0-widget').parents('div').remove();
+    afterEach(function (done) {
       global.window.location.hash = '';
       global.window.Auth0 = null;
-    });
-
-    afterEach(function () {
       this.auth0.removeAllListeners('transition_mode');
+      this.auth0._hideSignIn(done);
     });
 
-    before(function (done) {
-      var auth0 = this.auth0 = new Auth0Widget({
-        domain:      'mdocs.auth0.com',
-        callbackURL: 'http://localhost:3000/',
-        clientID:    '0HP71GSd6PuoRYJ3DXKdiXCUUdGmBbup',
-        enableReturnUserExperience: false
-      });
-      done();
-    });
+    beforeEach(function (done) {
+      var self = this;
 
+      if (!this.auth0) return onhidden();
+      this.auth0._hideSignIn(onhidden);
+
+      function onhidden() {
+        self.auth0 = new Auth0Widget({
+          domain:      'mdocs.auth0.com',
+          callbackURL: 'http://localhost:3000/',
+          clientID:    '0HP71GSd6PuoRYJ3DXKdiXCUUdGmBbup',
+          enableReturnUserExperience: false
+        });
+        done();
+      }
+    });
 
     // the test fails on IE9 but it does works. It looks like a timing issue.
     // it('email should have focus', function () {
