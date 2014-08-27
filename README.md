@@ -1,6 +1,11 @@
 [![Auth0](https://i.cloudup.com/1vaSVATKTL.png)](http://auth0.com)
 
-[![NPM version](https://badge.fury.io/js/auth0-widget.js.png)](http://badge.fury.io/js/auth0-widget.js)
+[![NPM version][npm-image]][npm-url]
+[![Build status][strider-image]][strider-url]
+[![Test coverage][coveralls-image]][coveralls-url]
+[![Dependency Status][david-image]][david-url]
+[![License][license-image]][license-url]
+[![Downloads][downloads-image]][downloads-url]
 
 [![Auth0](https://i.cloudup.com/fKuIOiaPrL.png)](http://auth0.com)
 
@@ -195,3 +200,19 @@ That's it!
 ## License
 
 MIT
+
+
+<!-- Vaaaaarrsss -->
+
+[npm-image]: https://img.shields.io/npm/v/auth0-widget.js.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/auth0-widget.js
+[strider-image]: https://ci2.cloudapp.net/auth0/widget/badge
+[strider-url]: https://ci2.cloudapp.net/auth0/widget
+[coveralls-image]: https://img.shields.io/coveralls/auth0/widget.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/r/auth0/widget?branch=master
+[david-image]: http://img.shields.io/david/auth0/widget.svg?style=flat-square
+[david-url]: https://david-dm.org/auth0/widget
+[license-image]: http://img.shields.io/npm/l/auth0-widget.js.svg?style=flat-square
+[license-url]: #License
+[downloads-image]: http://img.shields.io/npm/dm/auth0-widget.js.svg?style=flat-square
+[downloads-url]: https://npmjs.org/package/auth0-widget.js
