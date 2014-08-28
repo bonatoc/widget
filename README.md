@@ -206,8 +206,8 @@ MIT
 
 [npm-image]: https://img.shields.io/npm/v/auth0-widget.js.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/auth0-widget.js
-[strider-image]: http://ci2.cloudapp.net/auth0/widget/badge
-[strider-url]: http://ci2.cloudapp.net/auth0/widget
+[strider-image]: http://ci.auth0.com/auth0/widget/badge
+[strider-url]: http://ci.auth0.com/auth0/widget
 [coveralls-image]: https://img.shields.io/coveralls/auth0/widget.svg?style=flat-square
 [coveralls-url]: https://coveralls.io/r/auth0/widget?branch=master
 [david-image]: http://img.shields.io/david/auth0/widget.svg?style=flat-square
