@@ -222,13 +222,32 @@ module.exports = function (grunt) {
           method:         'delete'
         },
         files: [
-          { dest:     'w2/auth0-widget-' + pkg.version + '.js', },
-          { dest:     'w2/auth0-widget-' + pkg.version + '.min.js', },
-          { dest:     'w2/auth0-widget-' + major_version + '.js', },
-          { dest:     'w2/auth0-widget-' + major_version + '.min.js', },
-          { dest:     'w2/auth0-widget-' + minor_version + '.js', },
-          { dest:     'w2/auth0-widget-' + minor_version + '.min.js', }
+          { dest: 'w2/auth0-widget-' + pkg.version   + '.js'     },
+          { dest: 'w2/auth0-widget-' + pkg.version   + '.min.js' },
+          { dest: 'w2/auth0-widget-' + major_version + '.js'     },
+          { dest: 'w2/auth0-widget-' + major_version + '.min.js' },
+          { dest: 'w2/auth0-widget-' + minor_version + '.js'     },
+          { dest: 'w2/auth0-widget-' + minor_version + '.min.js' }
         ],
+      },
+    },
+    /* Purge FASTLY cache. */
+    fastly: {
+      options: {
+        key:  process.env.FASTLY_KEY,
+        host: process.env.FASTLY_HOST
+      },
+      purge: {
+        options: {
+          urls: [
+            'w2/auth0-widget-' + pkg.version   + '.js',
+            'w2/auth0-widget-' + pkg.version   + '.min.js',
+            'w2/auth0-widget-' + major_version + '.js',
+            'w2/auth0-widget-' + major_version + '.min.js',
+            'w2/auth0-widget-' + minor_version + '.js',
+            'w2/auth0-widget-' + minor_version + '.min.js'
+          ]
+        },
       },
     }
   });
@@ -253,6 +272,6 @@ module.exports = function (grunt) {
   grunt.registerTask("phantom",       ["build", "exec:test-inception", "exec:test-phantom"]);
   grunt.registerTask("integration",   ["build", "exec:test-inception", "exec:test-integration"]);
 
-  grunt.registerTask("cdn",           ["build", "copy:release", "s3:clean", "s3:publish", "maxcdn:purgeCache"]);
+  grunt.registerTask("cdn",           ["build", "copy:release", "s3:clean", "s3:publish", "maxcdn:purgeCache", "fastly:purgeCache"]);
 
 };
