@@ -272,6 +272,6 @@ module.exports = function (grunt) {
   grunt.registerTask("phantom",       ["build", "exec:test-inception", "exec:test-phantom"]);
   grunt.registerTask("integration",   ["build", "exec:test-inception", "exec:test-integration"]);
 
-  grunt.registerTask("cdn",           ["build", "copy:release", "s3:clean", "s3:publish", "maxcdn:purgeCache", "fastly:purgeCache"]);
+  grunt.registerTask("cdn",           ["build", "copy:release", "s3:clean", "s3:publish", "maxcdn:purgeCache", "fastly:purge"]);
 
 };
