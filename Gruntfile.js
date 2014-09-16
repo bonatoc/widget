@@ -174,33 +174,34 @@ module.exports = function (grunt) {
         tasks: ["less:example"]
       }
     },
-    s3: {
+    aws_s3: {
       options: {
-        key:    process.env.S3_KEY,
-        secret: process.env.S3_SECRET,
-        bucket: process.env.S3_BUCKET,
-        access: 'public-read',
-        headers: {
-          'Cache-Control': 'public, max-age=300',
-          'Content-Type': 'application/javascript; charset=UTF-8'
-        }
+        accessKeyId:     process.env.S3_KEY,
+        secretAccessKey: process.env.S3_SECRET,
+        bucket:          process.env.S3_BUCKET,
+        uploadConcurrency: 5,
+        params: {
+          CacheControl: 'public, max-age=300'
+        },
+        // debug: true <<< use this option to test changes
       },
       clean: {
-        del: [
-          { src:     'w2/auth0-widget-' + pkg.version + '.js', },
-          { src:     'w2/auth0-widget-' + pkg.version + '.min.js', },
-          { src:     'w2/auth0-widget-' + major_version + '.js', },
-          { src:     'w2/auth0-widget-' + major_version + '.min.js', },
-          { src:     'w2/auth0-widget-' + minor_version + '.js', },
-          { src:     'w2/auth0-widget-' + minor_version + '.min.js', }
+        files: [
+          { action: 'delete', dest: 'w2/auth0-widget-' + pkg.version + '.js', },
+          { action: 'delete', dest: 'w2/auth0-widget-' + pkg.version + '.min.js', },
+          { action: 'delete', dest: 'w2/auth0-widget-' + major_version + '.js', },
+          { action: 'delete', dest: 'w2/auth0-widget-' + major_version + '.min.js', },
+          { action: 'delete', dest: 'w2/auth0-widget-' + minor_version + '.js', },
+          { action: 'delete', dest: 'w2/auth0-widget-' + minor_version + '.min.js', }
         ]
       },
       publish: {
-        upload: [
+        files: [
           {
-            src:     'release/*',
-            dest:    'w2/',
-            options: { gzip: false }
+            expand: true,
+            cwd:    'release/',
+            src:    ['**'],
+            dest:   'w2/'
           }
         ]
       }
@@ -211,25 +212,6 @@ module.exports = function (grunt) {
       cdn: {
         clean: true
       }
-    },
-    maxcdn: {
-      purgeCache: {
-        options: {
-          companyAlias:   process.env.MAXCDN_COMPANY_ALIAS,
-          consumerKey:    process.env.MAXCDN_CONSUMER_KEY,
-          consumerSecret: process.env.MAXCDN_CONSUMER_SECRET,
-          zone_id:        process.env.MAXCDN_ZONE_ID,
-          method:         'delete'
-        },
-        files: [
-          { dest: 'w2/auth0-widget-' + pkg.version   + '.js'     },
-          { dest: 'w2/auth0-widget-' + pkg.version   + '.min.js' },
-          { dest: 'w2/auth0-widget-' + major_version + '.js'     },
-          { dest: 'w2/auth0-widget-' + major_version + '.min.js' },
-          { dest: 'w2/auth0-widget-' + minor_version + '.js'     },
-          { dest: 'w2/auth0-widget-' + minor_version + '.min.js' }
-        ],
-      },
     },
     /* Purge FASTLY cache. */
     fastly: {
@@ -272,6 +254,6 @@ module.exports = function (grunt) {
   grunt.registerTask("phantom",       ["build", "exec:test-inception", "exec:test-phantom"]);
   grunt.registerTask("integration",   ["build", "exec:test-inception", "exec:test-integration"]);
 
-  grunt.registerTask("cdn",           ["build", "copy:release", "s3:clean", "s3:publish", "maxcdn:purgeCache", "fastly:purge"]);
+  grunt.registerTask("cdn",           ["build", "copy:release", "aws_s3", "fastly:purge"]);
 
 };
