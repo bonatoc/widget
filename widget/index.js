@@ -1023,6 +1023,7 @@ Auth0Widget.prototype._resolveLoginView = function () {
   var anyEnterpriseOrDbConnection = self._areThereAnyEnterpriseOrDbConn();
   var anySocialConnection = self._areThereAnySocialConn();
   var anyDbConnection = self._areThereAnyDbConn();
+  var isADOrAuth0 = false;
 
   this._$('.a0-panel .a0-email input').toggleClass('a0-hide', !(self._signinOptions.showEmail && anyEnterpriseOrDbConnection));
   this._$('.a0-panel .a0-zocial.a0-primary').toggleClass('a0-hide', !(self._signinOptions.showEmail && anyEnterpriseOrDbConnection));
@@ -1048,12 +1049,18 @@ Auth0Widget.prototype._resolveLoginView = function () {
   } else {
     // if user logged in show logged in experience
     if (self._ssoData.sso && self._signinOptions['enableReturnUserExperience']) {
-      self._showLoggedInExperience();
-      return;
+      var connectionStrategy = self._ssoData && self._ssoData.lastUsedConnection && self._ssoData.lastUsedConnection.strategy;
+      isADOrAuth0 = connectionStrategy === 'auth0' || connectionStrategy === 'ad';
+
+      // Don't show last login if in Phonegap with AD or auth0 connection
+      if (!(window.cordova && isADOrAuth0)) {
+        self._showLoggedInExperience();
+        return;
+      }
     }
   }
 
-  self._setLoginView({ isReturningUser: self._ssoData.sso && self._signinOptions['enableReturnUserExperience'] !== false});
+  self._setLoginView({ isReturningUser: self._ssoData.sso && self._signinOptions['enableReturnUserExperience'] !== false && !(window.cordova && isADOrAuth0)});
 };
 
 Auth0Widget.prototype._getEmbededTemplate = function (signinOptions) {
