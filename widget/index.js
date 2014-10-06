@@ -1048,8 +1048,14 @@ Auth0Widget.prototype._resolveLoginView = function () {
   } else {
     // if user logged in show logged in experience
     if (self._ssoData.sso && self._signinOptions['enableReturnUserExperience']) {
-      self._showLoggedInExperience();
-      return;
+      var connectionStrategy = self._ssoData && self._ssoData.lastUsedConnection && self._ssoData.lastUsedConnection.strategy;
+      var isADOrAuth0 = connectionStrategy === 'auth0' || connectionStrategy === 'ad';
+
+      // Don't show last login if in Phonegap with AD or auth0 connection
+      if (!(window.cordova && isADOrAuth0) && shouldShow) {
+        self._showLoggedInExperience();
+        return;
+      }
     }
   }
 
