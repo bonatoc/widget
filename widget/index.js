@@ -161,7 +161,7 @@ Auth0Widget.prototype._showSuccess = function (message) {
   this._$('.a0-success').html(message).removeClass('a0-hide');
 };
 
-Auth0Widget.prototype._focusError = function(input, message, tooltip) {
+Auth0Widget.prototype._focusError = function(input, message) {
   // remove all `_focusError` resources
   if (!arguments.length) {
     // reset errors
@@ -169,7 +169,7 @@ Auth0Widget.prototype._focusError = function(input, message, tooltip) {
     this._$('.a0-error-input').removeClass('a0-error-input');
     this._$('.a0-error-message').remove();
     // reset animations
-    return animation_shake_reset(this._container);;
+    return animation_shake_reset(this._container);
   }
 
   // animation
@@ -177,16 +177,11 @@ Auth0Widget.prototype._focusError = function(input, message, tooltip) {
 
   input
     .parent()
-    .addClass('a0-error-input')
-
-  var $message = $.create('<span class="a0-error-message">' + message + '</span>');
-  if (tooltip) {
-    $($message).attr('title', tooltip);;
-  }
+    .addClass('a0-error-input');
 
   if (!message) return;
   input.parent()
-    .append($message);
+    .append($.create('<span class="a0-error-message">' + message + '</span>'));
 };
 
 Auth0Widget.prototype._setTitle = function(title) {

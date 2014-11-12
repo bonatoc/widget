@@ -101,13 +101,13 @@
       $(function() {
           $('#login-button').on('click', function() {
               var widget = new Auth0Widget({
-                  domain: 'login0.myauth0.com',
-                  clientID: 'CTwzuW0Y936aUCC7SyeEhQi2an6f9ZB0',
+                  domain: 'mdocs.auth0.com',
+                  clientID: 'yKJO1ckwuY1X8gPEhTRfhJXyObfiLxih',
                   callbackURL: window.location.href,
                   callbackOnLocationHash: true
                   // enableReturnUserExperience: false
               });
-              widget.signup({});
+              widget.signin({});
           });
           $('#login-button-copyrighted').on('click', function() {
               var widget = new Auth0Widget({
@@ -280,15 +280,12 @@
           });
           $('#signup-button').on('click', function() {
               var widget = new Auth0Widget({
-                  domain: 'login0.myauth0.com',
-                  clientID: 'q86aRjeCWKTVW4aYsANVeUHIMFgsT6jT',
+                  domain: 'mdocs.auth0.com',
+                  clientID: 'yKJO1ckwuY1X8gPEhTRfhJXyObfiLxih',
                   callbackURL: window.location.href,
                   callbackOnLocationHash: true
               });
-              widget.signup({}, null, function (err) {
-                alert('hi');
-                alert(err);
-              });
+              widget.signup({});
           });
           $('#signup-button-footer-text').on('click', function() {
               var widget = new Auth0Widget({

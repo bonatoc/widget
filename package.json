@@ -30,7 +30,6 @@
     "domready": "~0.2.13",
     "ejsify": "0.1.0",
     "has-transitions": "https://github.com/jfromaniello/has-transitions/tarball/patch-1",
-    "opentip": "^2.4.3",
     "packageify": "^0.2.0",
     "qwery": "~3.4.1",
     "underscore": "~1.5.2",
