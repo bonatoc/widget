@@ -2,6 +2,10 @@
   "loadingTitle": "Veuillez patienter...",
   "close": "Fermer",
   "windowsAuthTitle": "Connexion Windows",
+  "invalid":                       "Invalide",
+  "mustMatch":                     "Doit correspondre",
+  "loginSocialButton":             "S’identifier avec {connection:title}",
+  "signupSocialButton":             "S’inscrire avec {connection:title}",
   "signin": {
     "title": "Connexion",
     "action": "Connexion",
@@ -20,7 +24,10 @@
     "domainUserLabel": "Vous êtes connecté depuis le réseau de votre entreprise...",
     "wrongEmailPasswordErrorText": "Courriel ou mot de passe incorrect.",
     "or": "... ou connectez-vous à l'aide de",
-    "loadingMessage": "Connexion à l'aide de {connection}..."
+    "loadingMessage": "Connexion à l'aide de {connection}...",
+    "popupCredentials":            "Saisissez vos données dans la fenêtre popup",
+    "userClosedPopup":             "La fenêtre popup a été fermée. Veuillez réessayer.",
+    "userConsentFailed":           "Vous n’avez pas autorisé l'application. Veuillez réessayer."
   },
   "signup": {
     "description": "",
@@ -33,7 +40,8 @@
     "footerText": "",
     "enterpriseEmailWarningText": "Ce domaine {domain} a été configuré pour le Single Sign On et vous ne pouvez pas créer de compte. Essayez de vous connecter à un compte existant.",
     "serverErrorText": "Erreur lors de l'inscription.",
-    "userExistsErrorText": "Cet utilisateur existe déjà."
+    "userExistsErrorText": "Cet utilisateur existe déjà.",
+    "invalidPassword": "Le mot de passe n'est pas assez sûr."
   },
   "reset": {
     "title": "Réinitialiser votre mot de passe",
